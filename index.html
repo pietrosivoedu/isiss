@@ -150,12 +150,13 @@
             calcolaTotale();
         }
 
-        function calcolaTotale() {
+        
+function calcolaTotale() {
             let totalePezzi = 0;
             totaleEuro = 0;
             arrayCarrello = [];
             
-            // Loop basato sugli indici numerici: matematicamente immediato
+            // Loop basato sugli indici numerici
             listino.forEach((item, index) => {
                 let qtaProdotto = quantita[index];
                 if (qtaProdotto > 0) {
@@ -175,16 +176,15 @@
             totaleEuro = Math.round(totaleEuro * 100) / 100;
 
             if (totalePezzi > 0) {
-                // setParams aggiorna testo e visibilità istantaneamente senza provocare desincronizzazioni UI
-                tg.MainButton.setParams({
-                    text: `INVIA ORDINE (€ ${totaleEuro.toFixed(2)})`,
-                    is_visible: true
-                });
+                // FIX: Comandi separati per forzare il refresh grafico del client Telegram
+                tg.MainButton.setText(`INVIA ORDINE (€ ${totaleEuro.toFixed(2)})`);
+                tg.MainButton.show(); 
             } else {
                 tg.MainButton.hide();
             }
         }
 
+        
         Telegram.WebApp.onEvent('mainButtonClicked', function() {
             let payload = {
                 classe: document.getElementById('classe').value,
