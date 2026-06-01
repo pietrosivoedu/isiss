@@ -11,7 +11,7 @@
         .form-group label { display: block; font-size: 14px; margin-bottom: 5px; font-weight: bold; }
         .form-group input, .form-group textarea { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; }
         .sezione-dati { background: var(--tg-theme-secondary-bg-color, #f0f0f0); padding: 15px; border-radius: 12px; margin-bottom: 20px; }
-        .categoria { font-size: 18px; margin-top: 25px; margin-bottom: 10px; border-bottom: 2px solid #007aff; padding-bottom: 5px; font-weight: bold;}
+        .categoria { font-size: 18px; margin-top: 25px; margin-bottom: 10px; border-bottom: 2px solid #007aff; padding-bottom: 5px; font-weight: bold; }
         .prodotto { display: flex; justify-content: space-between; align-items: center; padding: 15px; margin-bottom: 10px; background: var(--tg-theme-secondary-bg-color, #f0f0f0); border-radius: 12px; }
         .info h3 { margin: 0 0 5px 0; font-size: 16px; }
         .info p { margin: 0; color: #888; font-size: 14px; }
@@ -42,88 +42,79 @@
         tg.expand();
         tg.MainButton.color = "#31b545";
 
-        // Listino riorganizzato e categorizzato per una migliore navigazione
         const listino = [
-            // PANINI E CALDI
-            { categoria: "Panini e Caldi", nome: "Panino Prosciutto crudo", prezzo: 1.50 },
-            { categoria: "Panini e Caldi", nome: "Panino Prosciutto crudo e formaggio", prezzo: 1.50 },
-            { categoria: "Panini e Caldi", nome: "Panino Salame", prezzo: 1.50 },
-            { categoria: "Panini e Caldi", nome: "Panino Salame e formaggio", prezzo: 1.50 },
-            { categoria: "Panini e Caldi", nome: "Panino Prosciutto cotto", prezzo: 1.50 },
-            { categoria: "Panini e Caldi", nome: "Panino Prosciutto cotto e formaggio", prezzo: 1.50 },
-            { categoria: "Panini e Caldi", nome: "Panino Mortadella", prezzo: 1.50 },
-            { categoria: "Panini e Caldi", nome: "Hot dog surgelato", prezzo: 2.00 },
-            { categoria: "Panini e Caldi", nome: "Panino napoletano surgelato", prezzo: 2.00 },
-            { categoria: "Panini e Caldi", nome: "Calzone mozzarella e pomodoro surgelato", prezzo: 2.20 },
-
-            // CAFFETTERIA
-            { categoria: "Caffetteria", nome: "Caffè", prezzo: 1.00 },
-            { categoria: "Caffetteria", nome: "Cappuccino", prezzo: 1.20 },
-            { categoria: "Caffetteria", nome: "Caffè orzo", prezzo: 1.00 },
-            { categoria: "Caffetteria", nome: "Ginseng", prezzo: 1.00 },
-            { categoria: "Caffetteria", nome: "Tè caldo", prezzo: 0.80 },
-            { categoria: "Caffetteria", nome: "Camomilla", prezzo: 0.80 },
-            { categoria: "Caffetteria", nome: "Tisane", prezzo: 0.80 },
-            { categoria: "Caffetteria", nome: "Cornetti vari", prezzo: 1.20 },
-            { categoria: "Caffetteria", nome: "Cornetti integrale", prezzo: 1.50 },
-            { categoria: "Caffetteria", nome: "Conchiglia", prezzo: 1.20 },
-
-            // BEVANDE
-            { categoria: "Bevande", nome: "Acqua naturale 50cl", prezzo: 0.50 },
-            { categoria: "Bevande", nome: "Acqua gassata 50cl", prezzo: 0.50 },
-            { categoria: "Bevande", nome: "Coca Cola 33cl", prezzo: 1.50 },
-            { categoria: "Bevande", nome: "Pepsi 33cl", prezzo: 1.00 },
-            { categoria: "Bevande", nome: "Estathé pesca o limone 33cl", prezzo: 1.50 },
-            { categoria: "Bevande", nome: "Fanta aranciata 33cl", prezzo: 1.20 },
-            { categoria: "Bevande", nome: "Succo frutta Brik (pesca/ace/albi) 200ml", prezzo: 0.70 },
-            { categoria: "Bevande", nome: "San Ben. succoso vari gusti 40cl", prezzo: 1.20 },
-            { categoria: "Bevande", nome: "Energade", prezzo: 1.20 },
-
-            // SNACK SALATI
-            { categoria: "Snack Salati", nome: "Pic Nic 50gr", prezzo: 1.20 },
-            { categoria: "Snack Salati", nome: "Nic Nac’s 125 gr", prezzo: 3.00 },
-            { categoria: "Snack Salati", nome: "Crackers TUC 31 gr", prezzo: 0.50 },
-            { categoria: "Snack Salati", nome: "Croccantelle (pizza o bacon)", prezzo: 0.50 },
-            { categoria: "Snack Salati", nome: "Krit tubo 100 gr", prezzo: 1.20 },
-            { categoria: "Snack Salati", nome: "Crackers Granpavesi", prezzo: 0.50 },
-            { categoria: "Snack Salati", nome: "Patatine San Carlo vari gusti", prezzo: 1.50 },
-            { categoria: "Snack Salati", nome: "Patatine Amica vari gusti", prezzo: 1.50 },
-            { categoria: "Snack Salati", nome: "Fonzies 40 gr", prezzo: 1.50 },
-
-            // SNACK DOLCI E CARAMELLE
-            { categoria: "Snack Dolci", nome: "Kinder Bueno classico o white", prezzo: 1.80 },
-            { categoria: "Snack Dolci", nome: "Kinder Cereali", prezzo: 1.00 },
-            { categoria: "Snack Dolci", nome: "Kit Kat classico o dark", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Lion", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Twix", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Bounty", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Mars", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Snickers", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Barretta Milka vari gusti", prezzo: 1.30 },
-            { categoria: "Snack Dolci", nome: "M & M vari gusti", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Ringo cacao o vaniglia 55gr", prezzo: 1.00 },
-            { categoria: "Snack Dolci", nome: "Baiocchi cacao o pistacchio 28gr", prezzo: 0.80 },
-            { categoria: "Snack Dolci", nome: "Pavesini monodose", prezzo: 0.80 },
-            { categoria: "Snack Dolci", nome: "Wafer vari gusti 45gr", prezzo: 1.00 },
-            { categoria: "Snack Dolci", nome: "Biscotti Lotus 250gr", prezzo: 2.50 },
-            { categoria: "Snack Dolci", nome: "Biscotti Oreo 66 gr", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Gomme Air Action", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Gomme Vigorsol (con/senza zucchero)", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Gomme Vigorsol frutta", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Gomme Air Action monoporzione", prezzo: 0.20 },
-            { categoria: "Snack Dolci", nome: "Fruit Joy", prezzo: 1.20 },
-            { categoria: "Snack Dolci", nome: "Golia Activ Plus", prezzo: 1.70 },
-            { categoria: "Snack Dolci", nome: "Goleador", prezzo: 0.20 },
-            { categoria: "Snack Dolci", nome: "Caramelle gommose hamburger", prezzo: 0.40 },
-            { categoria: "Snack Dolci", nome: "Lupo Alberto", prezzo: 0.20 },
-            { categoria: "Snack Dolci", nome: "Halls vari gusti", prezzo: 1.00 },
-            { categoria: "Snack Dolci", nome: "Hot Dog Trolly caramelle gommose", prezzo: 0.50 }
+            { categoria: "Listino", nome: "Panino Prosciutto crudo", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Panino Prosciutto crudo e formaggio", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Panino Salame", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Panino Salame e formaggio", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Panino Prosciutto cotto", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Panino Prosciutto cotto e formaggio", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Panino Mortadella", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Cornetti vari", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Cornetti integrale", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Conchiglia", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Hot dog surgelato", prezzo: 2 },
+            { categoria: "Listino", nome: "Panino napoletano surgelato", prezzo: 2 },
+            { categoria: "Listino", nome: "Calzone mozzarella e pomodoro surgelato", prezzo: 2.2 },
+            { categoria: "Listino", nome: "Caffè", prezzo: 1 },
+            { categoria: "Listino", nome: "Cappuccino", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Camomilla", prezzo: 0.8 },
+            { categoria: "Listino", nome: "Ginseng", prezzo: 1 },
+            { categoria: "Listino", nome: "Caffè orzo", prezzo: 1 },
+            { categoria: "Listino", nome: "Tè caldo", prezzo: 0.8 },
+            { categoria: "Listino", nome: "Tisane", prezzo: 0.8 },
+            { categoria: "Listino", nome: "Acqua naturale 50cl", prezzo: 0.5 },
+            { categoria: "Listino", nome: "Acqua gassata 50cl", prezzo: 0.5 },
+            { categoria: "Listino", nome: "Coca Cola 33cl", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Pepsi 33cl", prezzo: 1 },
+            { categoria: "Listino", nome: "Estathé pesca o limone 33cl", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Fanta aranciata 33cl", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Succo di frutta Brik pesca o ace o albicocca 200 ml", prezzo: 0.7 },
+            { categoria: "Listino", nome: "San Ben. succoso varie gusti 40 cl", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Energade", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Kinder Bueno classico o white", prezzo: 1.8 },
+            { categoria: "Listino", nome: "Kinder Cereali", prezzo: 1 },
+            { categoria: "Listino", nome: "Kit Kat classico o dark", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Lion", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Twix", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Bounty", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Mars", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Snickers", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Barretta Milka varie gusti", prezzo: 1.3 },
+            { categoria: "Listino", nome: "M & M varie gusti", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Pic Nic 50gr", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Nic Nac’s 125 gr", prezzo: 3 },
+            { categoria: "Listino", nome: "Ringo cacao o vaniglia 55gr", prezzo: 1 },
+            { categoria: "Listino", nome: "Baiocchi cacao o pistacchio 28gr", prezzo: 0.8 },
+            { categoria: "Listino", nome: "Pavesini monodose", prezzo: 0.8 },
+            { categoria: "Listino", nome: "Wafer varie gusti 45gr", prezzo: 1 },
+            { categoria: "Listino", nome: "Biscotti Lotus 250gr", prezzo: 2.5 },
+            { categoria: "Listino", nome: "Biscotti Oreo 66 gr", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Crackers TUC 31 gr", prezzo: 0.5 },
+            { categoria: "Listino", nome: "Croccantelle pizza o bacon o pizza", prezzo: 0.5 },
+            { categoria: "Listino", nome: "Krit tubo 100 gr", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Crackers Granpavesi", prezzo: 0.5 },
+            { categoria: "Listino", nome: "Patatine San Carlo varie gusti", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Patatine Amica varie gusti", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Fonzies 40 gr", prezzo: 1.5 },
+            { categoria: "Listino", nome: "Gomme Air Action", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Gomme Vigorsol con zucchero e senza", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Gomme Vigorsol frutta", prezzo: 1.2 },
+            { fontcategory: "Listino", nome: "Gomme Air Action monoporzione", prezzo: 0.2 },
+            { categoria: "Listino", nome: "Fruit Joy", prezzo: 1.2 },
+            { categoria: "Listino", nome: "Golia Activ Plus", prezzo: 1.7 },
+            { categoria: "Listino", nome: "Goleador", prezzo: 0.2 },
+            { categoria: "Listino", nome: "Caramelle gommose hamburger", prezzo: 0.4 },
+            { categoria: "Listino", nome: "Lupo Alberto", prezzo: 0.2 },
+            { categoria: "Listino", nome: "Halls varie gusti", prezzo: 1 },
+            { categoria: "Listino", nome: "Hot Dog Trolly caramelle gommose", prezzo: 0.5 }
         ];
 
-        let carrello = {};
+        // Creiamo un array parallelo di quantità basato sulla lunghezza del listino
+        let quantita = new Array(listino.length).fill(0);
         let container = document.getElementById("lista-prodotti");
         
-        // Risolto bug ritardo grafico: creiamo tutto il blocco in memoria
+        // Generazione efficiente del DOM in memoria per eliminare il lag visivo
         let htmlRender = "";
         let categoriaAttuale = "";
 
@@ -146,20 +137,16 @@
                 </div>
             `;
         });
-        
-        // Stampiamo a schermo una sola volta, azzerando il lag
         container.innerHTML = htmlRender;
 
         let totaleEuro = 0;
         let arrayCarrello = [];
 
         function modifica(index, valore) {
-            let nomeProdotto = listino[index].nome;
-            if (!carrello[nomeProdotto]) carrello[nomeProdotto] = 0;
-            carrello[nomeProdotto] += valore;
-            if (carrello[nomeProdotto] < 0) carrello[nomeProdotto] = 0;
+            quantita[index] += valore;
+            if (quantita[index] < 0) quantita[index] = 0;
             
-            document.getElementById('qta-' + index).innerText = carrello[nomeProdotto];
+            document.getElementById('qta-' + index).innerText = quantita[index];
             calcolaTotale();
         }
 
@@ -168,31 +155,31 @@
             totaleEuro = 0;
             arrayCarrello = [];
             
-            for (let item in carrello) {
-                if (carrello[item] > 0) {
-                    totalePezzi += carrello[item];
-                    let prodottoObj = listino.find(p => p.nome === item);
-                    if(prodottoObj) {
-                        // Calcolo matematico pulito per evitare bug dei decimali Javascript
-                        let totaleRiga = Math.round((carrello[item] * prodottoObj.prezzo) * 100) / 100;
-                        totaleEuro += totaleRiga;
-                        
-                        arrayCarrello.push({
-                            nome: item,
-                            prezzo: prodottoObj.prezzo,
-                            qta: carrello[item],
-                            totale_riga: totaleRiga
-                        });
-                    }
+            // Loop basato sugli indici numerici: matematicamente immediato
+            listino.forEach((item, index) => {
+                let qtaProdotto = quantita[index];
+                if (qtaProdotto > 0) {
+                    totalePezzi += qtaProdotto;
+                    let totaleRiga = Math.round((qtaProdotto * item.prezzo) * 100) / 100;
+                    totaleEuro += totaleRiga;
+                    
+                    arrayCarrello.push({
+                        nome: item.nome,
+                        prezzo: item.prezzo,
+                        qta: qtaProdotto,
+                        totale_riga: totaleRiga
+                    });
                 }
-            }
+            });
 
-            // Arrotondamento finale sicuro
             totaleEuro = Math.round(totaleEuro * 100) / 100;
 
             if (totalePezzi > 0) {
-                tg.MainButton.setText(`INVIA ORDINE (€ ${totaleEuro.toFixed(2)})`);
-                tg.MainButton.show();
+                // setParams aggiorna testo e visibilità istantaneamente senza provocare desincronizzazioni UI
+                tg.MainButton.setParams({
+                    text: `INVIA ORDINE (€ ${totaleEuro.toFixed(2)})`,
+                    is_visible: true
+                });
             } else {
                 tg.MainButton.hide();
             }
