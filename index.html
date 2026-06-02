@@ -27,17 +27,28 @@
         }
         
         .qta { font-weight: bold; width: 24px; text-align: center; font-size: 16px; }
-        .barra-totale-pagina { position: fixed; bottom: 0; left: 0; right: 0; background: #007aff; color: white; padding: 15px; text-align: center; font-size: 18px; font-weight: bold; box-shadow: 0 -3px 10px rgba(0,0,0,0.2); z-index: 999; }
+
+        /* NUOVO PULSANTE VERDE HTML - SOSTITUISCE IN MODO AFFIDABILE QUELLO DI TELEGRAM */
+        .barra-invia-html { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background: #31b545; color: white; padding: 18px; 
+            text-align: center; font-size: 18px; font-weight: bold; 
+            text-transform: uppercase; border: none; width: 100%;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.15); z-index: 999; 
+            cursor: pointer; display: none;
+            touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+        }
+        .barra-invia-html:active { background: #279639; }
     </style>
 </head>
 <body>
 
-    <h2 style="text-align: center; margin-top: 0;">Menu Bar ISISS</h2>
+    <h2 style="text-align: center; margin-top: 0;">Menu Bar</h2>
     
     <div class="sezione-dati">
         <div class="form-group">
             <label for="classe">Classe / Ufficio:</label>
-            <input type="text" id="classe" placeholder="es. 2BENO o 3A Info">
+            <input type="text" id="classe" placeholder="es. Ufficio Tecnico o 3A Info">
         </div>
         <div class="form-group">
             <label for="note">Note:</label>
@@ -47,14 +58,16 @@
     
     <div id="lista-prodotti"></div>
 
-    <div id="totale-pagina" class="barra-totale-pagina" style="display: none;">
-        Totale Ordine: € 0.00
-    </div>
+    <button id="btn-invia-ordine" class="barra-invia-html" onclick="scatenaInvio()">
+        Invia Ordine (€ 0.00)
+    </button>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        tg.MainButton.color = "#31b545";
+        
+        // Nascondiamo definitivamente il pulsante nativo per evitare conflitti
+        tg.MainButton.hide();
 
         const listino = [
             { categoria: "Panini e Caldi", nome: "Panino Prosciutto crudo", prezzo: 1.5 },
@@ -188,36 +201,28 @@
 
             totaleEuro = Math.round(totaleEuro * 100) / 100;
 
-            let divTotalePagina = document.getElementById("totale-pagina");
-            
+            let bnHtml = document.getElementById("btn-invia-ordine");
             if (totalePezzi > 0) {
-                // Aggiornamento immediato della barra blu interna
-                divTotalePagina.innerText = `Totale Ordine: € ${totaleEuro.toFixed(2)}`;
-                divTotalePagina.style.display = "block";
-                
-                // Modifica asincrona con micro-ritardo per allineare il bridge nativo di Telegram
-                setTimeout(() => {
-                    tg.MainButton.setParams({
-                        text: `INVIA ORDINE (€ ${totaleEuro.toFixed(2)})`,
-                        is_visible: true
-                    });
-                }, 50);
+                // Aggiornamento grafico istantaneo del DOM locale (infallibile)
+                bnHtml.innerText = `Invia Ordine (€ ${totaleEuro.toFixed(2)})`;
+                bnHtml.style.display = "block";
             } else {
-                divTotalePagina.style.display = "none";
-                tg.MainButton.hide();
+                bnHtml.style.display = "none";
             }
         }
 
-        Telegram.WebApp.onEvent('mainButtonClicked', function() {
+        // Funzione eseguita al clic sul nuovo bottone verde
+        function scatenaInvio() {
             let payload = {
                 classe: document.getElementById('classe').value,
                 note: document.getElementById('note').value,
                 prodotti: arrayCarrello,
                 totale_generale: totaleEuro
             };
+            // Invio dati nativo a Python (funziona da qualsiasi elemento HTML)
             tg.sendData(JSON.stringify(payload));
             tg.close();
-        });
+        }
     </script>
 </body>
 </html>
