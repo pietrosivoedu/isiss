@@ -15,8 +15,8 @@
             font-size: 18px; 
             margin-top: 25px; 
             margin-bottom: 15px; 
-            background-color: #1a4314; /* Verde scuro */
-            color: #ffffff; /* Testo bianco per contrasto */
+            background-color: #1a4314; 
+            color: #ffffff; 
             padding: 8px 12px; 
             border-radius: 8px; 
             font-weight: bold; 
@@ -37,17 +37,49 @@
         
         .qta { font-weight: bold; width: 24px; text-align: center; font-size: 16px; }
 
-        /* NUOVO PULSANTE VERDE HTML - SOSTITUISCE IN MODO AFFIDABILE QUELLO DI TELEGRAM */
         .barra-invia-html { 
             position: fixed; bottom: 0; left: 0; right: 0; 
             background: #31b545; color: white; padding: 18px; 
             text-align: center; font-size: 18px; font-weight: bold; 
             text-transform: uppercase; border: none; width: 100%;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.15); z-index: 999; 
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.15); z-index: 990; 
             cursor: pointer; display: none;
             touch-action: manipulation; -webkit-tap-highlight-color: transparent;
         }
         .barra-invia-html:active { background: #279639; }
+
+        /* NUOVI STILI PER IL MODAL DI RIEPILOGO */
+        .modal-overlay {
+            display: none; /* Nascosto di default */
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            width: 100%;
+            max-width: 400px;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .modal-content h2 { margin-top: 0; text-align: center; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        .riepilogo-riga { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 8px 0; font-size: 15px; }
+        .riepilogo-totale { text-align: right; font-size: 20px; font-weight: bold; margin-top: 15px; color: #1a4314; }
+        .modal-dati-utente { background: #f9f9f9; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 14px; color: #333;}
+        
+        .btn-conferma, .btn-annulla {
+            width: 100%; padding: 15px; font-size: 16px; font-weight: bold; text-transform: uppercase;
+            border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;
+        }
+        .btn-conferma { background: #31b545; color: white; }
+        .btn-annulla { background: #e0e0e0; color: #333; }
     </style>
 </head>
 <body>
@@ -56,7 +88,7 @@
     
     <div class="sezione-dati">
         <div class="form-group">
-            <label for="classe">Classe / Ufficio:</label>
+            <label for="classe">Classe / Ufficio (Obbligatorio):</label>
             <input type="text" id="classe" placeholder="es. 2Aeno o 3A Info">
         </div>
         <div class="form-group">
@@ -67,15 +99,25 @@
     
     <div id="lista-prodotti"></div>
 
-    <button id="btn-invia-ordine" class="barra-invia-html" onclick="scatenaInvio()">
-        Invia Ordine (€ 0.00)
+    <button id="btn-invia-ordine" class="barra-invia-html" onclick="mostraRiepilogo()">
+        Vedi Riepilogo (€ 0.00)
     </button>
+
+    <div id="modal-riepilogo" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Riepilogo Ordine</h2>
+            <div id="contenuto-dati-utente" class="modal-dati-utente"></div>
+            <div id="contenuto-carrello"></div>
+            <div class="riepilogo-totale" id="totale-riepilogo"></div>
+            
+            <button class="btn-conferma" onclick="scatenaInvio()">Conferma e Invia</button>
+            <button class="btn-annulla" onclick="chiudiRiepilogo()">Torna Indietro</button>
+        </div>
+    </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        
-        // Nascondiamo definitivamente il pulsante nativo per evitare conflitti
         tg.MainButton.hide();
 
         const listino = [
@@ -212,15 +254,60 @@
 
             let bnHtml = document.getElementById("btn-invia-ordine");
             if (totalePezzi > 0) {
-                // Aggiornamento grafico istantaneo del DOM locale (infallibile)
-                bnHtml.innerText = `Invia Ordine (€ ${totaleEuro.toFixed(2)})`;
+                bnHtml.innerText = `Vedi Riepilogo (€ ${totaleEuro.toFixed(2)})`;
                 bnHtml.style.display = "block";
             } else {
                 bnHtml.style.display = "none";
             }
         }
 
-        // Funzione eseguita al clic sul nuovo bottone verde
+        // NUOVA FUNZIONE: Apre il popup di riepilogo
+        function mostraRiepilogo() {
+            let classe = document.getElementById('classe').value.trim();
+            let note = document.getElementById('note').value.trim();
+            
+            // Controllo che la classe sia inserita
+            if (classe === "") {
+                if (tg.showAlert) {
+                    tg.showAlert("⚠️ Inserisci la tua Classe o Ufficio prima di procedere.");
+                } else {
+                    alert("⚠️ Inserisci la tua Classe o Ufficio prima di procedere.");
+                }
+                return;
+            }
+
+            // Popolo i dati utente
+            let htmlDati = `<strong>Classe/Ufficio:</strong> ${classe}`;
+            if (note !== "") {
+                htmlDati += `<br><strong>Note:</strong> ${note}`;
+            }
+            document.getElementById('contenuto-dati-utente').innerHTML = htmlDati;
+
+            // Popolo il carrello
+            let htmlCarrello = "";
+            arrayCarrello.forEach(item => {
+                htmlCarrello += `
+                    <div class="riepilogo-riga">
+                        <span><strong>${item.qta}x</strong> ${item.nome}</span>
+                        <span>€ ${item.totale_riga.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+            document.getElementById('contenuto-carrello').innerHTML = htmlCarrello;
+            
+            // Popolo il totale
+            document.getElementById('totale-riepilogo').innerHTML = `Totale: € ${totaleEuro.toFixed(2)}`;
+
+            // Mostro il popup
+            document.getElementById('modal-riepilogo').style.display = 'flex';
+        }
+
+        // NUOVA FUNZIONE: Chiude il popup di riepilogo
+        function chiudiRiepilogo() {
+            document.getElementById('modal-riepilogo').style.display = 'none';
+        }
+
+        // FUNZIONE AGGIORNATA: Invia definitivamente i dati
         function scatenaInvio() {
             let payload = {
                 classe: document.getElementById('classe').value,
@@ -228,7 +315,6 @@
                 prodotti: arrayCarrello,
                 totale_generale: totaleEuro
             };
-            // Invio dati nativo a Python (funziona da qualsiasi elemento HTML)
             tg.sendData(JSON.stringify(payload));
             tg.close();
         }
