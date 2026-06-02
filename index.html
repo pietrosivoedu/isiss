@@ -165,7 +165,8 @@
             calcolaTotale();
         }
 
-        function calcolaTotale() {
+
+function calcolaTotale() {
             let totalePezzi = 0;
             totaleEuro = 0;
             arrayCarrello = [];
@@ -191,21 +192,27 @@
             let divTotalePagina = document.getElementById("totale-pagina");
             
             if (totalePezzi > 0) {
-                // 1. Aggiorna la spia blu sulla pagina
+                // La barra blu si aggiorna subito come già faceva
                 divTotalePagina.innerText = `Totale Ordine: € ${totaleEuro.toFixed(2)}`;
                 divTotalePagina.style.display = "block";
                 
-                // 2. Forza l'aggiornamento del bottone di Telegram
-                tg.MainButton.setText(`INVIA ORDINE (€ ${totaleEuro.toFixed(2)})`);
-                if (!tg.MainButton.isVisible) {
-                    tg.MainButton.show();
-                }
+                // FIX: Sganciamo l'aggiornamento di Telegram dal thread principale.
+                // 50 millisecondi bastano per resettare il bridge nativo ed eliminare il passo di ritardo.
+                setTimeout(() => {
+                    tg.MainButton.setParams({
+                        text: `INVIA ORDINE (€ ${totaleEuro.toFixed(2)})`,
+                        is_visible: true
+                    });
+                }, 50);
             } else {
                 divTotalePagina.style.display = "none";
                 tg.MainButton.hide();
             }
         }
-
+        
+        
+        
+        
         Telegram.WebApp.onEvent('mainButtonClicked', function() {
             let payload = {
                 classe: document.getElementById('classe').value,
