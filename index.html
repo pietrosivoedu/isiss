@@ -17,14 +17,13 @@
         .info p { margin: 0; color: #888; font-size: 14px; }
         .controlli { display: flex; align-items: center; gap: 10px; }
         
-        /* FIX ANTI-LAG PER I TOCCHI RAPIDI SU SMARTPHONE */
         button.btn-qta { 
             background: #007aff; color: white; border: none; border-radius: 50%; 
             width: 32px; height: 32px; font-size: 20px; cursor: pointer; 
             display: flex; justify-content: center; align-items: center; 
-            touch-action: manipulation; /* Annulla il ritardo del doppio tocco */
-            -webkit-tap-highlight-color: transparent; /* Rimuove il fastidioso flash blu di Android */
-            user-select: none; /* Impedisce di selezionare il testo del tasto per errore */
+            touch-action: manipulation; 
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none; 
         }
         
         .qta { font-weight: bold; width: 24px; text-align: center; font-size: 16px; }
@@ -33,12 +32,12 @@
 </head>
 <body>
 
-    <h2 style="text-align: center; margin-top: 0;">Menu Bar</h2>
+    <h2 style="text-align: center; margin-top: 0;">Menu Bar ISISS</h2>
     
     <div class="sezione-dati">
         <div class="form-group">
             <label for="classe">Classe / Ufficio:</label>
-            <input type="text" id="classe" placeholder="es. Ufficio Tecnico o 3A Info">
+            <input type="text" id="classe" placeholder="es. 2BENO o 3A Info">
         </div>
         <div class="form-group">
             <label for="note">Note:</label>
@@ -67,14 +66,14 @@
             { categoria: "Panini e Caldi", nome: "Panino Mortadella", prezzo: 1.5 },
             { categoria: "Panini e Caldi", nome: "Hot dog surgelato", prezzo: 2 },
             { categoria: "Panini e Caldi", nome: "Panino napoletano surgelato", prezzo: 2 },
-            { categoria: "Panini e Caldi", nome: "Calzone mozz/pomodoro surgelato", prezzo: 2.2 },
+            { categoria: "Panini e Caldi", nome: "Calzone mozzarella e pomodoro surgelato", prezzo: 2.2 },
             
             { categoria: "Caffetteria", nome: "Caffè", prezzo: 1 },
             { categoria: "Caffetteria", nome: "Cappuccino", prezzo: 1.2 },
-            { categoria: "Caffetteria", nome: "Caffè orzo", prezzo: 1 },
-            { categoria: "Caffetteria", nome: "Ginseng", prezzo: 1 },
-            { categoria: "Caffetteria", nome: "Tè caldo", prezzo: 0.8 },
             { categoria: "Caffetteria", nome: "Camomilla", prezzo: 0.8 },
+            { categoria: "Caffetteria", nome: "Ginseng", prezzo: 1 },
+            { categoria: "Caffetteria", nome: "Caffè orzo", prezzo: 1 },
+            { categoria: "Caffetteria", nome: "Tè caldo", prezzo: 0.8 },
             { categoria: "Caffetteria", nome: "Tisane", prezzo: 0.8 },
             { categoria: "Caffetteria", nome: "Cornetti vari", prezzo: 1.2 },
             { categoria: "Caffetteria", nome: "Cornetti integrale", prezzo: 1.5 },
@@ -86,46 +85,47 @@
             { categoria: "Bevande", nome: "Pepsi 33cl", prezzo: 1 },
             { categoria: "Bevande", nome: "Estathé pesca o limone 33cl", prezzo: 1.5 },
             { categoria: "Bevande", nome: "Fanta aranciata 33cl", prezzo: 1.2 },
-            { categoria: "Bevande", nome: "Succo frutta Brik 200 ml", prezzo: 0.7 },
-            { categoria: "Bevande", nome: "San Ben. succoso vari gusti 40 cl", prezzo: 1.2 },
+            { categoria: "Bevande", nome: "Succo di frutta Brik pesca o ace o albicocca 200 ml", prezzo: 0.7 },
+            { categoria: "Bevande", nome: "San Ben. succoso varie gusti 40 cl", prezzo: 1.2 },
             { categoria: "Bevande", nome: "Energade", prezzo: 1.2 },
             
             { categoria: "Snack Salati", nome: "Pic Nic 50gr", prezzo: 1.2 },
             { categoria: "Snack Salati", nome: "Nic Nac’s 125 gr", prezzo: 3 },
             { categoria: "Snack Salati", nome: "Crackers TUC 31 gr", prezzo: 0.5 },
-            { categoria: "Snack Salati", nome: "Croccantelle", prezzo: 0.5 },
+            { categoria: "Snack Salati", nome: "Croccantelle pizza o bacon o pizza", prezzo: 0.5 },
             { categoria: "Snack Salati", nome: "Krit tubo 100 gr", prezzo: 1.2 },
             { categoria: "Snack Salati", nome: "Crackers Granpavesi", prezzo: 0.5 },
-            { categoria: "Snack Salati", nome: "Patatine San Carlo vari gusti", prezzo: 1.5 },
-            { categoria: "Snack Salati", nome: "Patatine Amica vari gusti", prezzo: 1.5 },
+            { categoria: "Snack Salati", nome: "Patatine San Carlo varie gusti", prezzo: 1.5 },
+            { categoria: "Snack Salati", nome: "Patatine Amica varie gusti", prezzo: 1.5 },
             { categoria: "Snack Salati", nome: "Fonzies 40 gr", prezzo: 1.5 },
             
-            { categoria: "Snack Dolci", nome: "Kinder Bueno", prezzo: 1.8 },
+            { categoria: "Snack Dolci", nome: "Kinder Bueno classico o white", prezzo: 1.8 },
             { categoria: "Snack Dolci", nome: "Kinder Cereali", prezzo: 1 },
-            { categoria: "Snack Dolci", nome: "Kit Kat", prezzo: 1.2 },
+            { categoria: "Snack Dolci", nome: "Kit Kat classico o dark", prezzo: 1.2 },
             { categoria: "Snack Dolci", nome: "Lion", prezzo: 1.2 },
             { categoria: "Snack Dolci", nome: "Twix", prezzo: 1.2 },
             { categoria: "Snack Dolci", nome: "Bounty", prezzo: 1.2 },
             { categoria: "Snack Dolci", nome: "Mars", prezzo: 1.2 },
             { categoria: "Snack Dolci", nome: "Snickers", prezzo: 1.2 },
-            { categoria: "Snack Dolci", nome: "Barretta Milka", prezzo: 1.3 },
-            { categoria: "Snack Dolci", nome: "M & M", prezzo: 1.2 },
-            { categoria: "Snack Dolci", nome: "Ringo 55gr", prezzo: 1 },
-            { categoria: "Snack Dolci", nome: "Baiocchi 28gr", prezzo: 0.8 },
+            { categoria: "Snack Dolci", nome: "Barretta Milka varie gusti", prezzo: 1.3 },
+            { categoria: "Snack Dolci", nome: "M & M varie gusti", prezzo: 1.2 },
+            { categoria: "Snack Dolci", nome: "Ringo cacao o vaniglia 55gr", prezzo: 1 },
+            { categoria: "Snack Dolci", nome: "Baiocchi cacao o pistacchio 28gr", prezzo: 0.8 },
             { categoria: "Snack Dolci", nome: "Pavesini monodose", prezzo: 0.8 },
-            { categoria: "Snack Dolci", nome: "Wafer 45gr", prezzo: 1 },
+            { categoria: "Snack Dolci", nome: "Wafer varie gusti 45gr", prezzo: 1 },
             { categoria: "Snack Dolci", nome: "Biscotti Lotus 250gr", prezzo: 2.5 },
             { categoria: "Snack Dolci", nome: "Biscotti Oreo 66 gr", prezzo: 1.2 },
             { categoria: "Snack Dolci", nome: "Gomme Air Action", prezzo: 1.2 },
-            { categoria: "Snack Dolci", nome: "Gomme Vigorsol", prezzo: 1.2 },
-            { categoria: "Snack Dolci", nome: "Gomme Air Action mono", prezzo: 0.2 },
+            { categoria: "Snack Dolci", nome: "Gomme Vigorsol con zucchero e senza", prezzo: 1.2 },
+            { categoria: "Snack Dolci", nome: "Gomme Vigorsol frutta", prezzo: 1.2 },
+            { categoria: "Snack Dolci", nome: "Gomme Air Action monoporzione", prezzo: 0.2 },
             { categoria: "Snack Dolci", nome: "Fruit Joy", prezzo: 1.2 },
             { categoria: "Snack Dolci", nome: "Golia Activ Plus", prezzo: 1.7 },
             { categoria: "Snack Dolci", nome: "Goleador", prezzo: 0.2 },
-            { categoria: "Snack Dolci", nome: "Caramelle gommose", prezzo: 0.4 },
+            { categoria: "Snack Dolci", nome: "Caramelle gommose hamburger", prezzo: 0.4 },
             { categoria: "Snack Dolci", nome: "Lupo Alberto", prezzo: 0.2 },
-            { categoria: "Snack Dolci", nome: "Halls", prezzo: 1 },
-            { categoria: "Snack Dolci", nome: "Hot Dog Trolly caramelle", prezzo: 0.5 }
+            { categoria: "Snack Dolci", nome: "Halls varie gusti", prezzo: 1 },
+            { categoria: "Snack Dolci", nome: "Hot Dog Trolly caramelle gommose", prezzo: 0.5 }
         ];
 
         let quantita = new Array(listino.length).fill(0);
@@ -165,8 +165,7 @@
             calcolaTotale();
         }
 
-
-function calcolaTotale() {
+        function calcolaTotale() {
             let totalePezzi = 0;
             totaleEuro = 0;
             arrayCarrello = [];
@@ -192,12 +191,11 @@ function calcolaTotale() {
             let divTotalePagina = document.getElementById("totale-pagina");
             
             if (totalePezzi > 0) {
-                // La barra blu si aggiorna subito come già faceva
+                // Aggiornamento immediato della barra blu interna
                 divTotalePagina.innerText = `Totale Ordine: € ${totaleEuro.toFixed(2)}`;
                 divTotalePagina.style.display = "block";
                 
-                // FIX: Sganciamo l'aggiornamento di Telegram dal thread principale.
-                // 50 millisecondi bastano per resettare il bridge nativo ed eliminare il passo di ritardo.
+                // Modifica asincrona con micro-ritardo per allineare il bridge nativo di Telegram
                 setTimeout(() => {
                     tg.MainButton.setParams({
                         text: `INVIA ORDINE (€ ${totaleEuro.toFixed(2)})`,
@@ -209,10 +207,7 @@ function calcolaTotale() {
                 tg.MainButton.hide();
             }
         }
-        
-        
-        
-        
+
         Telegram.WebApp.onEvent('mainButtonClicked', function() {
             let payload = {
                 classe: document.getElementById('classe').value,
